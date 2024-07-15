@@ -89,3 +89,26 @@ y_hat = housing_model.predict(X_test)
 print(mean_absolute_error(y_test, y_hat))
 
     # optimasi model
+def get_mae(max_leaf_nodes, X_train, X_test, y_train, y_test):
+    model = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=0)
+    model.fit(X_train, y_train)
+    y_hat = model.predict(X_test)
+    mae = mean_absolute_error(y_test, y_hat)
+    return mae
+
+        # membandingkan mae dengan beberapa nilai max_leaf_nodes untuk menemukan jumlah leaf paling optimum
+for max_leaf_nodes in [5, 50, 500, 5000]:
+    leaf_mae = get_mae(max_leaf_nodes, X_train, X_test, y_train, y_test)
+    print(f'Max leaf nodes: {max_leaf_nodes} \t Mean Absolute Error: {int(leaf_mae)}')
+print()
+
+# 5. Eksplorasi dengan random forest
+    # membangun machine learning model dengan random forest regressor
+
+    # importing RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor
+
+rf_model = RandomForestRegressor(n_estimators=100, random_state=1)
+rf_model.fit(X_train, y_train)
+y_hat = rf_model.predict(X_test)
+print(f'Mean absolute error: {int(mean_absolute_error(y_test, y_hat))}')
